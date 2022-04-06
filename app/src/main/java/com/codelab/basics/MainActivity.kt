@@ -50,7 +50,120 @@ class MainActivity:ComponentActivity() {
                 MyApp()
             }
         }
+
     }
+    /* Base Units
+       Mass - grams
+       Time - seconds
+       Temperature - Celcius
+       Data Storage - byte
+       Length - meter
+       Speed - meters per second
+       Volume - liter
+       *** Area - meter
+     */
+    fun toGrams(fromThis: String, convertMe: Double): Double {
+        var conversion = convertMe
+        when (fromThis) {
+            "carat (ct)(metric)" -> conversion *= 0.2
+            "point (pt)(metric)" -> conversion *= 0.002
+            "dram (dr)(avdp)" -> conversion *= 1.771845195
+            "dram (dr)(troy)" -> conversion *= 3.8879346
+            "grain (gr)(metric)" -> conversion *= 0.05
+            "grain (gr)(troy)" -> conversion *= 0.06479891
+            "gram (g)" -> conversion *= 1
+            "hundredweight (hwt)(long)" -> conversion *= 50802.34544
+            "hundredweight (hwt)(short)" -> conversion *= 45359.237
+            "kilogram (kg)" -> conversion *= 1000
+            "megagram (Mg)" -> conversion *= 1000000
+            "milligram (mg)" -> conversion *= 0.001
+            "microgram (&mu;g)" -> conversion *= 0.001
+            "ounce (oz)(avdp)" -> conversion *= 28.34952313
+            "ounce (oz)(troy)" -> conversion *= 31.1034768
+            "pennyweight (dwt)" -> conversion *= 1.55517384
+            "pound (avdp)" -> conversion *= 453.59237
+            "pound (metric)" -> conversion *= 500
+            "pound (troy)" -> conversion *= 373.2417216
+            "slug" -> conversion *= 14593.903
+            "stone (st)" -> conversion *= 6350.29318
+            "ton-assay (I AT)(long)" -> conversion *= 32.666667
+            "ton-assay (sh AT)(short)" -> conversion *= 29.166667
+            "ton (I tn)(long)" -> conversion *= 1016046.909
+            "ton (sh tn)(short)" -> conversion *= 907184.74
+            "ton-metric (t)" -> conversion *= 1000000
+            "tonne (t)(U.S. metric ton)" -> conversion *= 1000000
+        }
+        return conversion
+    }
+    fun fromGrams(toThat: String, convertMe: Double): Double {
+        var conversion = convertMe
+        when (toThat) {
+            "carat (ct)(metric)" -> conversion /= 0.2
+            "point (pt)(metric)" -> conversion /= 0.002
+            "dram (dr)(avdp)" -> conversion /= 1.771845195
+            "dram (dr)(troy)" -> conversion /= 3.8879346
+            "grain (gr)(metric)" -> conversion /= 0.05
+            "grain (gr)(troy)" -> conversion /= 0.06479891
+            "gram (g)" -> conversion /= 1
+            "hundredweight (hwt)(long)" -> conversion /= 50802.34544
+            "hundredweight (hwt)(short)" -> conversion /= 45359.237
+            "kilogram (kg)" -> conversion /= 1000
+            "megagram (Mg)" -> conversion /= 1000000
+            "milligram (mg)" -> conversion /= 0.001
+            "microgram (&mu;g)" -> conversion /= 0.001
+            "ounce (oz)(avdp)" -> conversion /= 28.34952313
+            "ounce (oz)(troy)" -> conversion /= 31.1034768
+            "pennyweight (dwt)" -> conversion /= 1.55517384
+            "pound (avdp)" -> conversion /= 453.59237
+            "pound (metric)" -> conversion /= 500
+            "pound (troy)" -> conversion /= 373.2417216
+            "slug" -> conversion /= 14593.903
+            "stone (st)" -> conversion /= 6350.29318
+            "ton-assay (l AT)(long)" -> conversion /= 32.666667
+            "ton-assay (sh AT)(short)" -> conversion /= 29.166667
+            "ton (l tn)(long)" -> conversion /= 1016046.909
+            "ton (sh tn)(short)" -> conversion /= 907184.74
+            "ton-metric (t)" -> conversion /= 1000000
+            "tonne (t)(U.S. metric ton)" -> conversion /= 1000000
+        }
+        return conversion
+    }
+    fun findMassConversion(fromThis: String, toThat: String, convertMe: Double): Double {
+        var conversion = toGrams(fromThis, convertMe)
+        return fromGrams(toThat, conversion)
+    }
+
+    /* Conversion Units: [second, minute, hour, day, week, month, year, century, millennium] */
+    fun toSeconds(fromThis: String, convertMe: Double): Double {return convertMe}
+    fun fromSeconds(toThat: String, convertMe: Double): Double {return convertMe}
+    fun findTimeConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
+
+    /* Conversion Units: [celcius, fahrenheit, newton, reaumur] */
+    fun toCelcius(fromThis: String, convertMe: Double): Double {return convertMe}
+    fun fromCelcius(toThat: String, convertMe: Double): Double {return convertMe}
+    fun findTemperatureConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
+
+    /* Conversion Units: [bit, byte, kilobyte, megabyte, gigabyte, terabyte, petabyte, exabyte, zettabyte, yottabyte] */
+    fun toByte(fromThis: String, convertMe: Double): Double {return convertMe}
+    fun fromByte(toThat: String, convertMe: Double): Double {return convertMe}
+    fun findDataStorageConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
+
+    /* Conversion Units: [centimeter, decimeter, millimeter, meter, decameter, hectometer, kilometer, inch, foot, yard, mile,] */
+    fun toMeter(fromThis: String, convertMe: Double): Double {return convertMe}
+    fun fromMeter(toThat: String, convertMe: Double): Double {return convertMe}
+    fun findLengthConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
+
+    /* Conversion Units: [centimetersPerSecond, metersPerSecond, kilometersPerSecond, inchesPerSecond, feetPerSecond, milesPerHour, knot] */
+    fun toMetersPerSecond(fromThis: String, convertMe: Double): Double {return convertMe}
+    fun fromMetersPerSecond(toThat: String, convertMe: Double): Double {return convertMe}
+    fun findSpeedConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
+
+    /* Conversion Units: [cubicMeter, barrel, cubicFoot, cubicDecimeter, liter, gallon, pint, cubicInch, cubicCentimeter, quart, gill, fluidOunce, fluidDram ] */
+    fun toLiter(fromThis: String, convertMe: Double): Double {return convertMe}
+    fun fromLiter(toThat: String, convertMe: Double): Double {return convertMe}
+    fun findVolumeConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
+
+
 }
 
 @Composable
@@ -85,7 +198,7 @@ private fun OnboardingScreen(onContinueClicked:()->Unit) {
 }
 
 @Composable
-private fun Greetings(names:List<String> = listOf("Data Storage","Weight","Time","Temperature")) {
+private fun Greetings(names:List<String> = listOf("Data Storage","Mass","Time","Temperature")) {
     LazyColumn(modifier=Modifier.padding(vertical=4.dp)) {
         items(items=names) {name->
             Greeting(name=name)
@@ -156,9 +269,9 @@ private fun CardContent(name:String) {
                                                 .size(70.dp)
                                          )
                                 }
-                                "Weight"      -> {
+                                "Mass"      -> {
                                     Image(
-                                            painter=painterResource(id=R.drawable.weight_icon),
+                                            painter=painterResource(id=R.drawable.mass_icon),
                                             contentDescription="Contact profile picture",
                                             modifier=Modifier
                                                 .size(70.dp)
