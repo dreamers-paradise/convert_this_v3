@@ -97,7 +97,7 @@ private fun Greetings(names:List<String> = listOf("Data Storage", "Weight", "Tim
 @Composable
 private fun Greeting(name:String) {
     Card(
-            backgroundColor=MaterialTheme.colors.primary,
+            backgroundColor=MaterialTheme.colors.surface,
             modifier=Modifier.padding(vertical=4.dp,horizontal=8.dp)
         ) {
         CardContent(name)
@@ -242,6 +242,26 @@ fun ConversionArea(name:String) {
             )
         Text(
                 text = "second unit",
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.primary
+            )
+        Text(
+                text = "third unit",
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.primary
+            )
+        Text(
+                text = "fourth unit",
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.primary
+            )
+        Text(
+                text = "fifth unit",
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.primary
+            )
+        Text(
+                text = "sixth unit",
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.primary
             )
