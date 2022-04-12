@@ -129,39 +129,40 @@ class MainActivity:ComponentActivity() {
         return conversion
     }
     fun findMassConversion(fromThis: String, toThat: String, convertMe: Double): Double {
-        var conversion = toGrams(fromThis, convertMe)
+        val conversion = toGrams(fromThis, convertMe)
         return fromGrams(toThat, conversion)
     }
-
-    /* Conversion Units: [second, minute, hour, day, week, month, year, century, millennium] */
-    fun toSeconds(fromThis: String, convertMe: Double): Double {return convertMe}
-    fun fromSeconds(toThat: String, convertMe: Double): Double {return convertMe}
-    fun findTimeConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
-
-    /* Conversion Units: [celcius, fahrenheit, newton, reaumur] */
-    fun toCelcius(fromThis: String, convertMe: Double): Double {return convertMe}
-    fun fromCelcius(toThat: String, convertMe: Double): Double {return convertMe}
-    fun findTemperatureConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
-
-    /* Conversion Units: [bit, byte, kilobyte, megabyte, gigabyte, terabyte, petabyte, exabyte, zettabyte, yottabyte] */
-    fun toByte(fromThis: String, convertMe: Double): Double {return convertMe}
-    fun fromByte(toThat: String, convertMe: Double): Double {return convertMe}
-    fun findDataStorageConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
-
-    /* Conversion Units: [centimeter, decimeter, millimeter, meter, decameter, hectometer, kilometer, inch, foot, yard, mile,] */
-    fun toMeter(fromThis: String, convertMe: Double): Double {return convertMe}
-    fun fromMeter(toThat: String, convertMe: Double): Double {return convertMe}
-    fun findLengthConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
-
-    /* Conversion Units: [centimetersPerSecond, metersPerSecond, kilometersPerSecond, inchesPerSecond, feetPerSecond, milesPerHour, knot] */
-    fun toMetersPerSecond(fromThis: String, convertMe: Double): Double {return convertMe}
-    fun fromMetersPerSecond(toThat: String, convertMe: Double): Double {return convertMe}
-    fun findSpeedConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
-
-    /* Conversion Units: [cubicMeter, barrel, cubicFoot, cubicDecimeter, liter, gallon, pint, cubicInch, cubicCentimeter, quart, gill, fluidOunce, fluidDram ] */
-    fun toLiter(fromThis: String, convertMe: Double): Double {return convertMe}
-    fun fromLiter(toThat: String, convertMe: Double): Double {return convertMe}
-    fun findVolumeConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
+//    TODO Chris build out test cases for the find_conversion functions
+//    TODO Ray add conversion math for all units
+//    /* Conversion Units: [second, minute, hour, day, week, month, year, century, millennium] */
+//    fun toSeconds(fromThis: String, convertMe: Double): Double {return convertMe}
+//    fun fromSeconds(toThat: String, convertMe: Double): Double {return convertMe}
+//    fun findTimeConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
+//
+//    /* Conversion Units: [celcius, fahrenheit, newton, reaumur] */
+//    fun toCelcius(fromThis: String, convertMe: Double): Double {return convertMe}
+//    fun fromCelcius(toThat: String, convertMe: Double): Double {return convertMe}
+//    fun findTemperatureConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
+//
+//    /* Conversion Units: [bit, byte, kilobyte, megabyte, gigabyte, terabyte, petabyte, exabyte, zettabyte, yottabyte] */
+//    fun toByte(fromThis: String, convertMe: Double): Double {return convertMe}
+//    fun fromByte(toThat: String, convertMe: Double): Double {return convertMe}
+//    fun findDataStorageConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
+//
+//    /* Conversion Units: [centimeter, decimeter, millimeter, meter, decameter, hectometer, kilometer, inch, foot, yard, mile,] */
+//    fun toMeter(fromThis: String, convertMe: Double): Double {return convertMe}
+//    fun fromMeter(toThat: String, convertMe: Double): Double {return convertMe}
+//    fun findLengthConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
+//
+//    /* Conversion Units: [centimetersPerSecond, metersPerSecond, kilometersPerSecond, inchesPerSecond, feetPerSecond, milesPerHour, knot] */
+//    fun toMetersPerSecond(fromThis: String, convertMe: Double): Double {return convertMe}
+//    fun fromMetersPerSecond(toThat: String, convertMe: Double): Double {return convertMe}
+//    fun findSpeedConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
+//
+//    /* Conversion Units: [cubicMeter, barrel, cubicFoot, cubicDecimeter, liter, gallon, pint, cubicInch, cubicCentimeter, quart, gill, fluidOunce, fluidDram ] */
+//    fun toLiter(fromThis: String, convertMe: Double): Double {return convertMe}
+//    fun fromLiter(toThat: String, convertMe: Double): Double {return convertMe}
+//    fun findVolumeConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
 
 
 }
