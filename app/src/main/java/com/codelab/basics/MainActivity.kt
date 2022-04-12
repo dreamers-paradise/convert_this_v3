@@ -24,6 +24,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -50,7 +51,6 @@ class MainActivity:ComponentActivity() {
                 MyApp()
             }
         }
-
     }
     /* Base Units
        Mass - grams
@@ -198,7 +198,7 @@ private fun OnboardingScreen(onContinueClicked:()->Unit) {
 }
 
 @Composable
-private fun Greetings(names:List<String> = listOf("Data Storage","Mass","Time","Temperature")) {
+private fun Greetings(names:List<String> = listOf("Data Storage", "Mass", "Time", "Temperature", "Length", "Volume", "Speed")) {
     LazyColumn(modifier=Modifier.padding(vertical=4.dp)) {
         items(items=names) {name->
             Greeting(name=name)
@@ -209,7 +209,7 @@ private fun Greetings(names:List<String> = listOf("Data Storage","Mass","Time","
 @Composable
 private fun Greeting(name:String) {
     Card(
-            backgroundColor=MaterialTheme.colors.primary,
+            backgroundColor=MaterialTheme.colors.surface,
             modifier=Modifier.padding(vertical=4.dp,horizontal=8.dp)
         ) {
         CardContent(name)
@@ -247,10 +247,7 @@ private fun CardContent(name:String) {
                ) {
                 Column {
                     if(expanded) {
-                        Text(
-                                text=("This is where the conversion dropdowns will be for $name"),
-                            )
-                        SimpleOutlinedTextFieldSample(name)
+                    ConversionArea(name=name)
                     } else {
                         Text(
                                 text=name,
@@ -293,6 +290,30 @@ private fun CardContent(name:String) {
                                                 .size(70.dp)
                                          )
                                 }
+                                "Length" -> {
+                                    Image(
+                                            painter=painterResource(id=R.drawable.length_icon),
+                                            contentDescription="Contact profile picture",
+                                            modifier=Modifier
+                                                .size(70.dp)
+                                         )
+                                }
+                                "Volume" -> {
+                                    Image(
+                                            painter=painterResource(id=R.drawable.volume_icon),
+                                            contentDescription="Contact profile picture",
+                                            modifier=Modifier
+                                                .size(70.dp)
+                                         )
+                                }
+                                "Speed" -> {
+                                    Image(
+                                            painter=painterResource(id=R.drawable.speed_icon),
+                                            contentDescription="Contact profile picture",
+                                            modifier=Modifier
+                                                .size(70.dp)
+                                         )
+                                }
                             }
                         }
                     }
@@ -310,6 +331,53 @@ fun SimpleOutlinedTextFieldSample(name:String) {
             onValueChange={text=it},
             label={Text("Text area for $name")}
                      )
+}
+
+@Composable
+fun ConversionArea(name:String) {
+    Column(
+            modifier =Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.surface),
+            horizontalAlignment = Alignment.CenterHorizontally
+          ) {
+        Text(
+                text = name,
+                style = MaterialTheme.typography.h4,
+                color = MaterialTheme.colors.primary
+            )
+        SimpleOutlinedTextFieldSample(name=name)
+        Text(
+                text = "first unit",
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.primary
+            )
+        Text(
+                text = "second unit",
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.primary
+            )
+        Text(
+                text = "third unit",
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.primary
+            )
+        Text(
+                text = "fourth unit",
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.primary
+            )
+        Text(
+                text = "fifth unit",
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.primary
+            )
+        Text(
+                text = "sixth unit",
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.primary
+            )
+    }
 }
 
 
