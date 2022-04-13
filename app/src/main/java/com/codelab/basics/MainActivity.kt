@@ -25,6 +25,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -220,22 +221,22 @@ private fun Greeting(name:String) {
 @Composable
 private fun CardContent(name:String) {
     var expanded by remember {mutableStateOf(false)}
-
-    Row(
-            modifier=Modifier
-                .padding(12.dp)
+        Row(
+            modifier= Modifier
+//                .padding(12.dp)
                 .animateContentSize(
-                        animationSpec=spring(
-                                dampingRatio=Spring.DampingRatioMediumBouncy,
-                                stiffness=Spring.StiffnessLow
-                                            )
-                                   )
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessLow
+                    )
+                )
        ) {
         Column(
                 modifier=Modifier
                     .weight(1f)
-                    .padding(12.dp)
-              ) {
+//                    .padding(12.dp)
+              )
+            {
             Row(
                     modifier=Modifier
                         .padding(12.dp)
@@ -246,75 +247,24 @@ private fun CardContent(name:String) {
                                                     )
                                            )
                ) {
-                Column {
                     if(expanded) {
-                    ConversionArea(name=name)
+                        Column(verticalArrangement=Arrangement.Center,
+                                horizontalAlignment=Alignment.CenterHorizontally) {
+                            Row(modifier=Modifier
+                                .clickable {expanded=!expanded})
+                             {
+                                NamePlusIcon(name = name)
+                            }
+                            ConversionArea(name = name)
+                        }
                     } else {
-                        Text(
-                                text=name,
-                                style=MaterialTheme.typography.h4.copy(
-                                        fontWeight=FontWeight.ExtraBold
-                                                                      )
-                            )
-                    }
-                        IconButton(onClick={expanded=!expanded}) {
-                            when(name) {
-                                "Data Storage"-> {
-                                    Image(
-                                            painter=painterResource(id=R.drawable.data_storage_icon),
-                                            contentDescription="Contact profile picture",
-                                            modifier=Modifier
-                                                .size(70.dp)
-                                         )
-                                }
-                                "Mass"      -> {
-                                    Image(
-                                            painter=painterResource(id=R.drawable.mass_icon),
-                                            contentDescription="Contact profile picture",
-                                            modifier=Modifier
-                                                .size(70.dp)
-                                         )
-                                }
-                                "Time"        -> {
-                                    Image(
-                                            painter=painterResource(id=R.drawable.time_icon),
-                                            contentDescription="Contact profile picture",
-                                            modifier=Modifier
-                                                .size(70.dp)
-                                         )
-                                }
-                                "Temperature" -> {
-                                    Image(
-                                            painter=painterResource(id=R.drawable.temperature_icon),
-                                            contentDescription="Contact profile picture",
-                                            modifier=Modifier
-                                                .size(70.dp)
-                                         )
-                                }
-                                "Length" -> {
-                                    Image(
-                                            painter=painterResource(id=R.drawable.length_icon),
-                                            contentDescription="Contact profile picture",
-                                            modifier=Modifier
-                                                .size(70.dp)
-                                         )
-                                }
-                                "Volume" -> {
-                                    Image(
-                                            painter=painterResource(id=R.drawable.volume_icon),
-                                            contentDescription="Contact profile picture",
-                                            modifier=Modifier
-                                                .size(70.dp)
-                                         )
-                                }
-                                "Speed" -> {
-                                    Image(
-                                            painter=painterResource(id=R.drawable.speed_icon),
-                                            contentDescription="Contact profile picture",
-                                            modifier=Modifier
-                                                .size(70.dp)
-                                         )
-                                }
+                        Column(verticalArrangement=Arrangement.Center,
+                                horizontalAlignment=Alignment.CenterHorizontally
+                            ) {
+                            Row(modifier=Modifier
+                                .clickable {expanded=!expanded})
+                            {
+                                NamePlusIcon(name = name)
                             }
                         }
                     }
@@ -323,16 +273,85 @@ private fun CardContent(name:String) {
         }
     }
 
-
 @Composable
-fun SimpleOutlinedTextFieldSample(name:String) {
-    var text by remember { mutableStateOf("") }
-    OutlinedTextField(
-            value=text,
-            onValueChange={text=it},
-            label={Text("Text area for $name")}
-                     )
-}
+fun NamePlusIcon(name:String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceAround) {
+            Text(
+                text = name,
+                style = MaterialTheme.typography.h4.copy(
+                    fontWeight = FontWeight.ExtraBold
+                )
+            )
+            when (name) {
+                "Data Storage" -> {
+                    Image(
+                        painter = painterResource(id = R.drawable.data_storage_icon),
+                        contentDescription = "Contact profile picture",
+                        modifier = Modifier
+                            .size(70.dp)
+                            .padding(horizontal = 8.dp)
+                    )
+                }
+                "Mass" -> {
+                    Image(
+                        painter = painterResource(id = R.drawable.mass_icon),
+                        contentDescription = "Contact profile picture",
+                        modifier = Modifier
+                            .size(70.dp)
+                            .padding(horizontal = 8.dp)
+                    )
+                }
+                "Time" -> {
+                    Image(
+                        painter = painterResource(id = R.drawable.time_icon),
+                        contentDescription = "Contact profile picture",
+                        modifier = Modifier
+                            .size(70.dp)
+                            .padding(horizontal = 8.dp)
+                    )
+                }
+                "Temperature" -> {
+                    Image(
+                        painter = painterResource(id = R.drawable.temperature_icon),
+                        contentDescription = "Contact profile picture",
+                        modifier = Modifier
+                            .size(70.dp)
+                            .padding(horizontal = 8.dp)
+                    )
+                }
+                "Length" -> {
+                    Image(
+                        painter = painterResource(id = R.drawable.length_icon),
+                        contentDescription = "Contact profile picture",
+                        modifier = Modifier
+                            .size(70.dp)
+                            .padding(horizontal = 8.dp)
+                    )
+                }
+                "Volume" -> {
+                    Image(
+                        painter = painterResource(id = R.drawable.volume_icon),
+                        contentDescription = "Contact profile picture",
+                        modifier = Modifier
+                            .size(70.dp)
+                            .padding(horizontal = 8.dp)
+                    )
+                }
+                "Speed" -> {
+                    Image(
+                        painter = painterResource(id = R.drawable.speed_icon),
+                        contentDescription = "Contact profile picture",
+                        modifier = Modifier
+                            .size(70.dp)
+                            .padding(horizontal = 8.dp)
+                    )
+                }
+            }
+        }
+    }
 
 @Composable
 fun ConversionArea(name:String) {
@@ -342,11 +361,6 @@ fun ConversionArea(name:String) {
                 .background(MaterialTheme.colors.surface),
             horizontalAlignment = Alignment.CenterHorizontally
           ) {
-        Text(
-                text = name,
-                style = MaterialTheme.typography.h4,
-                color = MaterialTheme.colors.primary
-            )
         SimpleOutlinedTextFieldSample(name=name)
         Text(
                 text = "first unit",
@@ -379,6 +393,16 @@ fun ConversionArea(name:String) {
                 color = MaterialTheme.colors.primary
             )
     }
+}
+
+@Composable
+fun SimpleOutlinedTextFieldSample(name:String) {
+    var text by remember { mutableStateOf("") }
+    OutlinedTextField(
+        value=text,
+        onValueChange={text=it},
+        label={Text("Text area for $name")}
+    )
 }
 
 
