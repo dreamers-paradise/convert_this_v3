@@ -293,7 +293,7 @@ fun NamePlusIcon(name:String) {
                         contentDescription = "Contact profile picture",
                         modifier = Modifier
                             .size(70.dp)
-                            .padding(horizontal = 8.dp)
+                            .padding(horizontal = 4.dp)
                             .offset( x = -24.dp )
                     )
                 }
@@ -303,7 +303,7 @@ fun NamePlusIcon(name:String) {
                         contentDescription = "Contact profile picture",
                         modifier = Modifier
                             .size(70.dp)
-                            .padding(horizontal = 8.dp)
+                            .padding(horizontal = 4.dp)
                             .offset( x = -24.dp )
                     )
                 }
@@ -313,7 +313,7 @@ fun NamePlusIcon(name:String) {
                         contentDescription = "Contact profile picture",
                         modifier = Modifier
                             .size(70.dp)
-                            .padding(horizontal = 8.dp)
+                            .padding(horizontal = 4.dp)
                             .offset( x = -24.dp )
                     )
                 }
@@ -323,7 +323,7 @@ fun NamePlusIcon(name:String) {
                         contentDescription = "Contact profile picture",
                         modifier = Modifier
                             .size(70.dp)
-                            .padding(horizontal = 8.dp)
+                            .padding(horizontal = 4.dp)
                             .offset( x = -24.dp )
                     )
                 }
@@ -333,7 +333,7 @@ fun NamePlusIcon(name:String) {
                         contentDescription = "Contact profile picture",
                         modifier = Modifier
                             .size(70.dp)
-                            .padding(horizontal = 8.dp)
+                            .padding(horizontal = 4.dp)
                             .offset( x = -24.dp )
                     )
                 }
@@ -343,7 +343,7 @@ fun NamePlusIcon(name:String) {
                         contentDescription = "Contact profile picture",
                         modifier = Modifier
                             .size(70.dp)
-                            .padding(horizontal = 8.dp)
+                            .padding(horizontal = 4.dp)
                             .offset( x = -24.dp )
                     )
                 }
@@ -353,7 +353,7 @@ fun NamePlusIcon(name:String) {
                         contentDescription = "Contact profile picture",
                         modifier = Modifier
                             .size(70.dp)
-                            .padding(horizontal = 8.dp)
+                            .padding(horizontal = 4.dp)
                             .offset( x = -24.dp )
                     )
                 }
