@@ -200,7 +200,7 @@ private fun OnboardingScreen(onContinueClicked:()->Unit) {
 }
 
 @Composable
-private fun Greetings(names:List<String> = listOf("Data Storage", "Mass", "Time", "Temperature", "Length", "Volume", "Speed")) {
+private fun Greetings(names:List<String> = listOf("Mass", "Time", "Temperature", "Length", "Volume", "Speed", "Data Storage")) {
     LazyColumn(modifier=Modifier.padding(vertical=4.dp)) {
         items(items=names) {name->
             Greeting(name=name)
@@ -278,8 +278,9 @@ fun NamePlusIcon(name:String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround) {
+        horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
+                modifier=Modifier.padding(horizontal=24.dp),
                 text = name,
                 style = MaterialTheme.typography.h4.copy(
                     fontWeight = FontWeight.ExtraBold
@@ -293,6 +294,7 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 8.dp)
+                            .offset( x = -24.dp )
                     )
                 }
                 "Mass" -> {
@@ -302,6 +304,7 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 8.dp)
+                            .offset( x = -24.dp )
                     )
                 }
                 "Time" -> {
@@ -311,6 +314,7 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 8.dp)
+                            .offset( x = -24.dp )
                     )
                 }
                 "Temperature" -> {
@@ -320,6 +324,7 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 8.dp)
+                            .offset( x = -24.dp )
                     )
                 }
                 "Length" -> {
@@ -329,6 +334,7 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 8.dp)
+                            .offset( x = -24.dp )
                     )
                 }
                 "Volume" -> {
@@ -338,6 +344,7 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 8.dp)
+                            .offset( x = -24.dp )
                     )
                 }
                 "Speed" -> {
@@ -347,6 +354,7 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 8.dp)
+                            .offset( x = -24.dp )
                     )
                 }
             }
