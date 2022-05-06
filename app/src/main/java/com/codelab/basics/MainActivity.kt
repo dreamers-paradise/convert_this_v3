@@ -18,6 +18,7 @@ package com.codelab.basics
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateContentSize
@@ -29,7 +30,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,11 +44,19 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toSize
 import com.codelab.basics.ui.BasicsCodelabTheme
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class MainActivity:ComponentActivity() {
     override fun onCreate(savedInstanceState:Bundle?) {
@@ -54,85 +68,17 @@ class MainActivity:ComponentActivity() {
         }
     }
     /* Base Units
-       Mass - grams
-       Time - seconds
-       Temperature - Celcius
+       Mass - grams - DONE
+       Time - seconds - DONE
+       Temperature - Celsius
        Data Storage - byte
        Length - meter
        Speed - meters per second
        Volume - liter
        *** Area - meter
      */
-    fun toGrams(fromThis: String, convertMe: Double): Double {
-        var conversion = convertMe
-        when (fromThis) {
-            "carat (ct)(metric)" -> conversion *= 0.2
-            "point (pt)(metric)" -> conversion *= 0.002
-            "dram (dr)(avdp)" -> conversion *= 1.771845195
-            "dram (dr)(troy)" -> conversion *= 3.8879346
-            "grain (gr)(metric)" -> conversion *= 0.05
-            "grain (gr)(troy)" -> conversion *= 0.06479891
-            "gram (g)" -> conversion *= 1
-            "hundredweight (hwt)(long)" -> conversion *= 50802.34544
-            "hundredweight (hwt)(short)" -> conversion *= 45359.237
-            "kilogram (kg)" -> conversion *= 1000
-            "megagram (Mg)" -> conversion *= 1000000
-            "milligram (mg)" -> conversion *= 0.001
-            "microgram (&mu;g)" -> conversion *= 0.001
-            "ounce (oz)(avdp)" -> conversion *= 28.34952313
-            "ounce (oz)(troy)" -> conversion *= 31.1034768
-            "pennyweight (dwt)" -> conversion *= 1.55517384
-            "pound (avdp)" -> conversion *= 453.59237
-            "pound (metric)" -> conversion *= 500
-            "pound (troy)" -> conversion *= 373.2417216
-            "slug" -> conversion *= 14593.903
-            "stone (st)" -> conversion *= 6350.29318
-            "ton-assay (I AT)(long)" -> conversion *= 32.666667
-            "ton-assay (sh AT)(short)" -> conversion *= 29.166667
-            "ton (I tn)(long)" -> conversion *= 1016046.909
-            "ton (sh tn)(short)" -> conversion *= 907184.74
-            "ton-metric (t)" -> conversion *= 1000000
-            "tonne (t)(U.S. metric ton)" -> conversion *= 1000000
-        }
-        return conversion
-    }
-    fun fromGrams(toThat: String, convertMe: Double): Double {
-        var conversion = convertMe
-        when (toThat) {
-            "carat (ct)(metric)" -> conversion /= 0.2
-            "point (pt)(metric)" -> conversion /= 0.002
-            "dram (dr)(avdp)" -> conversion /= 1.771845195
-            "dram (dr)(troy)" -> conversion /= 3.8879346
-            "grain (gr)(metric)" -> conversion /= 0.05
-            "grain (gr)(troy)" -> conversion /= 0.06479891
-            "gram (g)" -> conversion /= 1
-            "hundredweight (hwt)(long)" -> conversion /= 50802.34544
-            "hundredweight (hwt)(short)" -> conversion /= 45359.237
-            "kilogram (kg)" -> conversion /= 1000
-            "megagram (Mg)" -> conversion /= 1000000
-            "milligram (mg)" -> conversion /= 0.001
-            "microgram (&mu;g)" -> conversion /= 0.001
-            "ounce (oz)(avdp)" -> conversion /= 28.34952313
-            "ounce (oz)(troy)" -> conversion /= 31.1034768
-            "pennyweight (dwt)" -> conversion /= 1.55517384
-            "pound (avdp)" -> conversion /= 453.59237
-            "pound (metric)" -> conversion /= 500
-            "pound (troy)" -> conversion /= 373.2417216
-            "slug" -> conversion /= 14593.903
-            "stone (st)" -> conversion /= 6350.29318
-            "ton-assay (l AT)(long)" -> conversion /= 32.666667
-            "ton-assay (sh AT)(short)" -> conversion /= 29.166667
-            "ton (l tn)(long)" -> conversion /= 1016046.909
-            "ton (sh tn)(short)" -> conversion /= 907184.74
-            "ton-metric (t)" -> conversion /= 1000000
-            "tonne (t)(U.S. metric ton)" -> conversion /= 1000000
-        }
-        return conversion
-    }
-    fun findMassConversion(fromThis: String, toThat: String, convertMe: Double): Double {
-        val conversion = toGrams(fromThis, convertMe)
-        return fromGrams(toThat, conversion)
-    }
+
+
 //    TODO Chris build out test cases for the find_conversion functions
 //    TODO Ray add conversion math for all units
 //    /* Conversion Units: [second, minute, hour, day, week, month, year, century, millennium] */
@@ -140,9 +86,9 @@ class MainActivity:ComponentActivity() {
 //    fun fromSeconds(toThat: String, convertMe: Double): Double {return convertMe}
 //    fun findTimeConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
 //
-//    /* Conversion Units: [celcius, fahrenheit, newton, reaumur] */
-//    fun toCelcius(fromThis: String, convertMe: Double): Double {return convertMe}
-//    fun fromCelcius(toThat: String, convertMe: Double): Double {return convertMe}
+//    /* Conversion Units: [celsius, fahrenheit, newton, reaumur] */
+//    fun toCelsius(fromThis: String, convertMe: Double): Double {return convertMe}
+//    fun fromCelsius(toThat: String, convertMe: Double): Double {return convertMe}
 //    fun findTemperatureConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
 //
 //    /* Conversion Units: [bit, byte, kilobyte, megabyte, gigabyte, terabyte, petabyte, exabyte, zettabyte, yottabyte] */
@@ -170,7 +116,8 @@ class MainActivity:ComponentActivity() {
 
 @Composable
 private fun MyApp() {
-    var shouldShowOnboarding by rememberSaveable {mutableStateOf(true)}
+    // Turning off onboarding until we have a useful screen
+    var shouldShowOnboarding by rememberSaveable {mutableStateOf(false)}
 
     if(shouldShowOnboarding) {
         OnboardingScreen(onContinueClicked={shouldShowOnboarding=false})
@@ -223,7 +170,6 @@ private fun CardContent(name:String) {
     var expanded by remember {mutableStateOf(false)}
         Row(
             modifier= Modifier
-//                .padding(12.dp)
                 .animateContentSize(
                     animationSpec = spring(
                         dampingRatio = Spring.DampingRatioMediumBouncy,
@@ -234,18 +180,17 @@ private fun CardContent(name:String) {
         Column(
                 modifier=Modifier
                     .weight(1f)
-//                    .padding(12.dp)
               )
             {
             Row(
-                    modifier=Modifier
+                    modifier= Modifier
                         .padding(12.dp)
                         .animateContentSize(
-                                animationSpec=spring(
-                                        dampingRatio=Spring.DampingRatioMediumBouncy,
-                                        stiffness=Spring.StiffnessLow
-                                                    )
-                                           )
+                            animationSpec = spring(
+                                dampingRatio = Spring.DampingRatioMediumBouncy,
+                                stiffness = Spring.StiffnessLow
+                            )
+                        )
                ) {
                     if(expanded) {
                         Column(verticalArrangement=Arrangement.Center,
@@ -255,7 +200,36 @@ private fun CardContent(name:String) {
                              {
                                 NamePlusIcon(name = name)
                             }
-                            ConversionArea(name = name)
+                            var expandedDropDown by remember { mutableStateOf(false)}
+                            val suggestions  = getKeys(name)
+                            var selectedText by remember { mutableStateOf(suggestions[0]) }
+
+                            Column(Modifier.padding(5.dp)) {
+
+                                Box {
+                                    Row(Modifier.clickable {
+                                        expandedDropDown = !expandedDropDown
+                                    }) {
+                                        Text(text = selectedText)
+                                        Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = "")
+
+                                        DropdownMenu(
+                                            expanded = expandedDropDown,
+                                            onDismissRequest = { expandedDropDown = false }
+                                        ) {
+                                            suggestions.forEach { label ->
+                                                DropdownMenuItem(onClick = {
+                                                    selectedText = label
+                                                    expandedDropDown = false
+                                                }) {
+                                                    Text(text = label)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            ConversionArea(name = name, conversion = selectedText)
                         }
                     } else {
                         Column(verticalArrangement=Arrangement.Center,
@@ -294,7 +268,7 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
-                            .offset( x = -24.dp )
+                            .offset(x = (-24).dp)
                     )
                 }
                 "Mass" -> {
@@ -304,7 +278,7 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
-                            .offset( x = -24.dp )
+                            .offset(x = (-24).dp)
                     )
                 }
                 "Time" -> {
@@ -314,7 +288,7 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
-                            .offset( x = -24.dp )
+                            .offset(x = (-24).dp)
                     )
                 }
                 "Temperature" -> {
@@ -324,7 +298,7 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
-                            .offset( x = -24.dp )
+                            .offset(x = (-24).dp)
                     )
                 }
                 "Length" -> {
@@ -334,7 +308,7 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
-                            .offset( x = -24.dp )
+                            .offset(x = (-24).dp)
                     )
                 }
                 "Volume" -> {
@@ -344,7 +318,7 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
-                            .offset( x = -24.dp )
+                            .offset(x = (-24).dp)
                     )
                 }
                 "Speed" -> {
@@ -354,66 +328,175 @@ fun NamePlusIcon(name:String) {
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
-                            .offset( x = -24.dp )
+                            .offset(x = (-24).dp)
                     )
                 }
             }
         }
     }
 
+fun getKeys(name: String): List<String> {
+    val massKeys = listOf(
+        "Gram(g)",
+        "Ounce(oz)",
+        "Pound(lb)",
+        "Kilogram(kg)",
+        "Microgram(mcg)",
+        "Stone(st)",
+        "US ton(t)",
+        "Imperial ton(t)",
+        "Metric ton(mt)"
+    )
+    val timeKeys = listOf(
+        "Second",
+//        "Nanosecond",
+//        "Microsecond",
+//        "Millisecond",
+        "Minute",
+        "Hour",
+        "Day",
+        "Week",
+        "Month",
+        "Year",
+//        "Decade",
+//        "Century",
+//        "Millennium"
+    )
+    return when(name) {
+        "Mass" -> massKeys
+        "Time" -> timeKeys
+        else -> {
+            listOf("undefined")
+        }
+    }
+}
+/* Conversion Units: [second, minute, hour, day, week, month, year, century, millennium] */
+private fun toSeconds(fromThis: String, convertMe: Double): Double {
+    var conversion = convertMe
+    when (fromThis) {
+        "Nanosecond" -> conversion *= 1000000000
+        "Microsecond" -> conversion *= 1000000
+        "Millisecond" -> conversion *= 1000
+        "Second" -> conversion *= 1
+        "Minute" -> conversion *= 60
+        "Hour" -> conversion *= 3600
+        "Day" -> conversion *= 86400
+        "Week" -> conversion *= 604800
+        "Month" -> conversion *= 2629746
+        "Year" -> conversion *= 31556952
+        "Decade" -> conversion *= 315569520
+        "Century" -> conversion *= 3155695200
+        "Millennium" -> conversion *= 31557600000
+    }
+    return conversion
+}
+private fun fromSeconds(toThat: String, convertMe: Double): Double {
+    var conversion = convertMe
+    when (toThat) {
+//        "Nanosecond" -> conversion /= 1000000000
+//        "Microsecond" -> conversion /= 1000000
+//        "Millisecond" -> conversion /= 1000
+        "Second" -> conversion /= 1
+        "Minute" -> conversion /= 60
+        "Hour" -> conversion /= 3600
+        "Day" -> conversion /= 86400
+        "Week" -> conversion /= 604800
+        "Month" -> conversion /= 2629746
+        "Year" -> conversion /= 31556952
+//        "Decade" -> conversion /= 315569520
+//        "Century" -> conversion /= 3155695200
+//        "Millennium" -> conversion /= 31557600000
+    }
+    return conversion
+}
+fun findTimeConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    val conversion = toSeconds(fromThis, convertMe.toDouble())
+    val converted = fromSeconds(toThat, conversion)
+//    if(converted > 1){
+//        return Math.round(converted * 1000000.0) / 1000000.0
+//    }
+    return converted
+}
+
+private fun toGrams(fromThis: String, convertMe: Double): Double {
+    var conversion = convertMe
+
+    when (fromThis) {
+        "Ounce(oz)" -> conversion *= 28.34952
+        "Pound(lb)" -> conversion *= 453.59237
+        "Gram(g)" -> conversion *= 1
+        "Kilogram(kg)" -> conversion *= 1000
+        "Microgram(&mu;g)" -> conversion *= 1000000
+        "Stone(st)" -> conversion *= 6350.29318
+        "US ton(t)" -> conversion *=  907184.74
+        "Imperial ton(t)" -> conversion *=  1016046.91
+        "Metric ton(mt)" -> conversion *=  1000000
+    }
+    return conversion
+}
+private fun fromGrams(toThat: String, convertMe: Double): Double {
+    var conversion = convertMe
+    when (toThat) {
+        "Ounce(oz)" -> conversion /= 28.34952
+        "Pound(lb)" -> conversion /= 453.59237
+        "Gram(g)" -> conversion /= 1
+        "Kilogram(kg)" -> conversion /= 1000
+        "Microgram(&mu;g)" -> conversion /= 1000000
+        "Stone(st)" -> conversion /= 6350.29318
+        "US ton(t)" -> conversion /=  907184.74
+        "Imperial ton(t)" -> conversion /=  1016046.91
+        "Metric ton(mt)" -> conversion /=  1000000
+    }
+    return conversion
+}
+fun findMassConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    val conversion = toGrams(fromThis, convertMe.toDouble())
+    val converted = fromGrams(toThat, conversion)
+    if(converted > 1){
+        return Math.round(converted * 10000.0) / 10000.0
+    }
+    return converted
+}
+
 @Composable
-fun ConversionArea(name:String) {
+fun ConversionArea(name:String, conversion:String) {
     Column(
-            modifier =Modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.surface),
             horizontalAlignment = Alignment.CenterHorizontally
           ) {
-        SimpleOutlinedTextFieldSample(name=name)
-        Text(
-                text = "first unit",
+
+        var userText by remember { mutableStateOf("") }
+        OutlinedTextField(
+            value=userText,
+            onValueChange={ userText = it },
+            label={Text("Text area for $name")},
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
+
+        val keysToUse = getKeys(name)
+
+        for (unit in keysToUse){
+            var converted = ""
+            if(userText.length > 0){
+                val df = DecimalFormat("#.###")
+                df.roundingMode = RoundingMode.CEILING
+                when (name) {
+                    "Mass" -> converted =
+                        df.format(findMassConversion(conversion, unit, userText)).toString()
+                    "Time" -> converted =
+                        df.format(findTimeConversion(conversion, unit, userText)).toString()
+                }
+            }
+            Text(
+                text = unit.plus(": ").plus(converted),
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.primary
             )
-        Text(
-                text = "second unit",
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.primary
-            )
-        Text(
-                text = "third unit",
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.primary
-            )
-        Text(
-                text = "fourth unit",
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.primary
-            )
-        Text(
-                text = "fifth unit",
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.primary
-            )
-        Text(
-                text = "sixth unit",
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.primary
-            )
+        }
     }
 }
-
-@Composable
-fun SimpleOutlinedTextFieldSample(name:String) {
-    var text by remember { mutableStateOf("") }
-    OutlinedTextField(
-        value=text,
-        onValueChange={text=it},
-        label={Text("Text area for $name")}
-    )
-}
-
-
 
 @Preview(
         showBackground=true,
