@@ -349,22 +349,34 @@ fun getKeys(name: String): List<String> {
     )
     val timeKeys = listOf(
         "Second",
-//        "Nanosecond",
-//        "Microsecond",
-//        "Millisecond",
         "Minute",
         "Hour",
         "Day",
         "Week",
         "Month",
-        "Year",
-//        "Decade",
-//        "Century",
-//        "Millennium"
+        "Year"
+    )
+    val speedKeys = listOf(
+        "Kilometer per hour",
+        "Miles per hour(mph)",
+        "Foot per second",
+        "Meter per second",
+        "Knot"
+    )
+    val dataStorageKeys = listOf(
+        "bit(b)",
+        "byte(B)",
+        "kilobyte(kB)",
+        "megabyte(MB)",
+        "gigabyte(GB)",
+        "terabyte(TB)",
+        "petabyte(PB)"
     )
     return when(name) {
         "Mass" -> massKeys
         "Time" -> timeKeys
+        "Speed" -> speedKeys
+        "Data Storage" -> dataStorageKeys
         else -> {
             listOf("undefined")
         }
@@ -412,9 +424,6 @@ private fun fromSeconds(toThat: String, convertMe: Double): Double {
 fun findTimeConversion(fromThis: String, toThat: String, convertMe: String): Double {
     val conversion = toSeconds(fromThis, convertMe.toDouble())
     val converted = fromSeconds(toThat, conversion)
-//    if(converted > 1){
-//        return Math.round(converted * 1000000.0) / 1000000.0
-//    }
     return converted
 }
 
@@ -458,6 +467,67 @@ fun findMassConversion(fromThis: String, toThat: String, convertMe: String): Dou
     return converted
 }
 
+private fun toKph(fromThis: String, convertMe: Double): Double {
+    var conversion = convertMe
+    when (fromThis) {
+        "Kilometer per hour" -> conversion *= 1
+        "Miles per hour(mph)" -> conversion *= 1.609344
+        "Foot per second" -> conversion *= 1.09728
+        "Meter per second" -> conversion *= 3.6
+        "Knot" -> conversion *= 1.852
+    }
+    return conversion
+}
+private fun fromKph(toThat: String, convertMe: Double): Double {
+    var conversion = convertMe
+    when (toThat) {
+        "Kilometer per hour" -> conversion /= 1
+        "Miles per hour(mph)" -> conversion /= 1.609344
+        "Foot per second" -> conversion *= 1.09728
+        "Meter per second" -> conversion *= 1.09728
+        "Knot" -> conversion *= 0.539957
+    }
+    return conversion
+}
+fun findSpeedConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    val conversion = toKph(fromThis, convertMe.toDouble())
+    val converted = fromKph(toThat, conversion)
+    return converted
+}
+
+private fun toByte(fromThis: String, convertMe: Double): Double {
+    var conversion = convertMe
+
+    when (fromThis) {
+        "byte(B)" -> conversion *= 1
+        "bit(b)" -> conversion /= 8
+        "kilobyte(kB)" -> conversion *= 1000
+        "megabyte(MB)" -> conversion *= 1000000
+        "gigabyte(GB)" -> conversion *= 1000000000
+        "terabyte(TB)" -> conversion *= 1000000000000
+        "petabyte(PB)" -> conversion *= 1000000000000000
+    }
+    return conversion
+}
+private fun fromByte(toThat: String, convertMe: Double): Double {
+    var conversion = convertMe
+    when (toThat) {
+        "byte(B)" -> conversion /= 1
+        "bit(b)" -> conversion *= 8
+        "kilobyte(kB)" -> conversion /= 1000
+        "megabyte(MB)" -> conversion /= 1000000
+        "gigabyte(GB)" -> conversion /= 1000000000
+        "terabyte(TB)" -> conversion /= 1000000000000
+        "petabyte(PB)" -> conversion /= 1000000000000000
+    }
+    return conversion
+}
+fun findDataStorageConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    val conversion = toByte(fromThis, convertMe.toDouble())
+    val converted = fromByte(toThat, conversion)
+    return converted
+}
+
 @Composable
 fun ConversionArea(name:String, conversion:String) {
     Column(
@@ -487,6 +557,10 @@ fun ConversionArea(name:String, conversion:String) {
                         df.format(findMassConversion(conversion, unit, userText)).toString()
                     "Time" -> converted =
                         df.format(findTimeConversion(conversion, unit, userText)).toString()
+                    "Speed" -> converted =
+                        df.format(findSpeedConversion(conversion, unit, userText)).toString()
+                    "Data Storage" -> converted =
+                        df.format(findDataStorageConversion(conversion, unit, userText)).toString()
                 }
             }
             Text(
