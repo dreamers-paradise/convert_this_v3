@@ -86,7 +86,7 @@ class MainActivity:ComponentActivity() {
 //    fun fromSeconds(toThat: String, convertMe: Double): Double {return convertMe}
 //    fun findTimeConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
 //
-//    /* Conversion Units: [celsius, fahrenheit, newton, reaumur] */
+//    /* Conversion Units: [celsius, fahrenheit, kelvin] */
 //    fun toCelsius(fromThis: String, convertMe: Double): Double {return convertMe}
 //    fun fromCelsius(toThat: String, convertMe: Double): Double {return convertMe}
 //    fun findTemperatureConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
@@ -96,7 +96,7 @@ class MainActivity:ComponentActivity() {
 //    fun fromByte(toThat: String, convertMe: Double): Double {return convertMe}
 //    fun findDataStorageConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
 //
-//    /* Conversion Units: [centimeter, decimeter, millimeter, meter, decameter, hectometer, kilometer, inch, foot, yard, mile,] */
+//    /* Conversion Units: [Kilometer, Meter, Centimeter, Millimeter, Micrometer, Nanometer, Mile, Yard, Foot, Inch, Nautical Mile] */
 //    fun toMeter(fromThis: String, convertMe: Double): Double {return convertMe}
 //    fun fromMeter(toThat: String, convertMe: Double): Double {return convertMe}
 //    fun findLengthConversion(fromThis: String, toThat: String, convertMe: Double): Double {return convertMe}
@@ -187,8 +187,8 @@ private fun CardContent(name:String) {
                         .padding(12.dp)
                         .animateContentSize(
                             animationSpec = spring(
-                                dampingRatio = Spring.DampingRatioMediumBouncy,
-                                stiffness = Spring.StiffnessLow
+                                dampingRatio = Spring.DampingRatioLowBouncy,
+                                stiffness = Spring.StiffnessHigh
                             )
                         )
                ) {
@@ -356,6 +356,40 @@ fun getKeys(name: String): List<String> {
         "Month",
         "Year"
     )
+    val temperatureKeys = listOf(
+        "Celsius(°C)",
+        "Fahrenheit(°F)",
+        "kelvin(K)"
+    )
+    val lengthKeys = listOf(
+        "Mile",
+        "Yard",
+        "Foot",
+        "Inch",
+        "Nautical Mile",
+        "Kilometer",
+        "Meter",
+        "Centimeter",
+        "Millimeter",
+        "Micrometer",
+        "Nanometer"
+    )
+    val volumeKeys = listOf(
+        "barrel",
+        "gallon",
+        "quart",
+        "pint",
+        "cup",
+        "gill",
+        "tablespoon",
+        "teaspoon",
+        "cubic meter",
+        "cubic foot",
+        "cubic yard",
+        "liter",
+        "milliliter",
+        "fluid ounce"
+    )
     val speedKeys = listOf(
         "Kilometer per hour",
         "Miles per hour(mph)",
@@ -375,6 +409,9 @@ fun getKeys(name: String): List<String> {
     return when(name) {
         "Mass" -> massKeys
         "Time" -> timeKeys
+        "Temperature" -> temperatureKeys
+        "Length" -> lengthKeys
+        "Volume" -> volumeKeys
         "Speed" -> speedKeys
         "Data Storage" -> dataStorageKeys
         else -> {
@@ -467,6 +504,126 @@ fun findMassConversion(fromThis: String, toThat: String, convertMe: String): Dou
     return converted
 }
 
+private fun toCelsius(fromThis: String, convertMe: Double): Double {
+    var conversion = convertMe
+    when (fromThis) {
+        "Celsius(°C)" -> conversion *= 1
+        "kelvin(K)" -> conversion + 273.15
+        "Fahrenheit(°F)" -> ((conversion - 32) * (5/9))
+    }
+    return conversion
+}
+private fun fromCelsius(toThat: String, convertMe: Double): Double {
+    var conversion = convertMe
+    when (toThat) {
+        "Celsius(°C)" -> conversion /= 1
+        "kelvin(K)" -> conversion - 273.15
+        "Fahrenheit(°F)" -> ((conversion * (9/5) + 32))
+    }
+    return conversion
+}
+fun findTemperatureConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    val conversion = toCelsius(fromThis, convertMe.toDouble())
+    val converted = fromCelsius(toThat, conversion)
+    if(converted > 1){
+        return Math.round(converted * 10000.0) / 10000.0
+    }
+    return converted
+}
+
+private fun toMeter(fromThis: String, convertMe: Double): Double {
+    var conversion = convertMe
+    when (fromThis) {
+        "Mile" -> conversion *= 1609
+        "Yard" -> conversion *= 0.9144
+        "Foot" -> conversion *= 0.3048
+        "Inch" -> conversion *= 0.0254
+        "Nautical Mile" -> conversion *= 1852
+        "Kilometer" -> conversion *= 1000
+        "Meter" -> conversion *= 1
+        "Centimeter" -> conversion *= 0.01
+        "Millimeter" -> conversion *= 0.001
+        "Micrometer" -> conversion *= 0.000001
+        "Nanometer" -> conversion *= 0.000000001
+    }
+    return conversion
+}
+private fun fromMeter(toThat: String, convertMe: Double): Double {
+    var conversion = convertMe
+    when (toThat) {
+        "Mile" -> conversion /= 1609
+        "Yard" -> conversion /= 0.9144
+        "Foot" -> conversion /= 0.3048
+        "Inch" -> conversion /= 0.0254
+        "Nautical Mile" -> conversion /= 1852
+        "Kilometer" -> conversion /= 1000
+        "Meter" -> conversion /= 1
+        "Centimeter" -> conversion /= 0.01
+        "Millimeter" -> conversion /= 0.001
+        "Micrometer" -> conversion /= 0.000001
+        "Nanometer" -> conversion /= 0.000000001
+    }
+    return conversion
+}
+fun findLengthConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    val conversion = toMeter(fromThis, convertMe.toDouble())
+    val converted = fromMeter(toThat, conversion)
+    if(converted > 1){
+        return Math.round(converted * 10000.0) / 10000.0
+    }
+    return converted
+}
+
+private fun toLiter(fromThis: String, convertMe: Double): Double {
+    var conversion = convertMe
+    when (fromThis) {
+        "barrel" -> conversion *= 119.2404712
+        "gallon" -> conversion *= 3.785411784
+        "quart" -> conversion *= 0.946352946
+        "pint" -> conversion *= 0.473176473
+        "cup" -> conversion *= 0.2365882365
+        "gill" -> conversion *= 0.1182941182
+        "tablespoon" -> conversion *= 0.0147867648
+        "teaspoon" -> conversion *= 0.0049289216
+        "cubic meter" -> conversion *= 1000
+        "cubic foot" -> conversion *= 28.316846592
+        "cubic yard" -> conversion *= 764.55485798
+        "liter" -> conversion *= 1
+        "milliliter" -> conversion *= 0.001
+        "fluid ounce" -> conversion *= 0.0295735296
+    }
+    return conversion
+}
+private fun fromLiter(toThat: String, convertMe: Double): Double {
+    var conversion = convertMe
+    when (toThat) {
+        "barrel" -> conversion /= 119.2404712
+        "gallon" -> conversion /= 3.785411784
+        "quart" -> conversion /= 0.946352946
+        "pint" -> conversion /= 0.473176473
+        "cup" -> conversion /= 0.2365882365
+        "gill" -> conversion /= 0.1182941182
+        "tablespoon" -> conversion /= 0.0147867648
+        "teaspoon" -> conversion /= 0.0049289216
+        "cubic meter" -> conversion /= 1000
+        "cubic foot" -> conversion /= 28.316846592
+        "cubic yard" -> conversion /= 764.55485798
+        "liter" -> conversion /= 1
+        "milliliter" -> conversion /= 0.001
+        "fluid ounce" -> conversion /= 0.0295735296
+    }
+    return conversion
+}
+fun findVolumeConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    val conversion = toLiter(fromThis, convertMe.toDouble())
+    val converted = fromLiter(toThat, conversion)
+    if(converted > 1){
+        return Math.round(converted * 10000.0) / 10000.0
+    }
+    return converted
+}
+
+
 private fun toKph(fromThis: String, convertMe: Double): Double {
     var conversion = convertMe
     when (fromThis) {
@@ -557,6 +714,12 @@ fun ConversionArea(name:String, conversion:String) {
                         df.format(findMassConversion(conversion, unit, userText)).toString()
                     "Time" -> converted =
                         df.format(findTimeConversion(conversion, unit, userText)).toString()
+                    "Temperature" -> converted =
+                        df.format(findTemperatureConversion(conversion, unit, userText)).toString()
+                    "Length" -> converted =
+                        df.format(findLengthConversion(conversion, unit, userText)).toString()
+                    "Volume" -> converted =
+                        df.format(findVolumeConversion(conversion, unit, userText)).toString()
                     "Speed" -> converted =
                         df.format(findSpeedConversion(conversion, unit, userText)).toString()
                     "Data Storage" -> converted =
