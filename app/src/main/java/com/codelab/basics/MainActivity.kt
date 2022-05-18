@@ -264,7 +264,7 @@ fun NamePlusIcon(name:String) {
                 "Data Storage" -> {
                     Image(
                         painter = painterResource(id = R.drawable.data_storage_icon),
-                        contentDescription = "Contact profile picture",
+                        contentDescription = "Data Storage image",
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
@@ -274,7 +274,7 @@ fun NamePlusIcon(name:String) {
                 "Mass" -> {
                     Image(
                         painter = painterResource(id = R.drawable.mass_icon),
-                        contentDescription = "Contact profile picture",
+                        contentDescription = "Mass image",
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
@@ -284,7 +284,7 @@ fun NamePlusIcon(name:String) {
                 "Time" -> {
                     Image(
                         painter = painterResource(id = R.drawable.time_icon),
-                        contentDescription = "Contact profile picture",
+                        contentDescription = "Time image",
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
@@ -294,7 +294,7 @@ fun NamePlusIcon(name:String) {
                 "Temperature" -> {
                     Image(
                         painter = painterResource(id = R.drawable.temperature_icon),
-                        contentDescription = "Contact profile picture",
+                        contentDescription = "Temperature image",
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
@@ -304,7 +304,7 @@ fun NamePlusIcon(name:String) {
                 "Length" -> {
                     Image(
                         painter = painterResource(id = R.drawable.length_icon),
-                        contentDescription = "Contact profile picture",
+                        contentDescription = "Length image",
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
@@ -314,7 +314,7 @@ fun NamePlusIcon(name:String) {
                 "Volume" -> {
                     Image(
                         painter = painterResource(id = R.drawable.volume_icon),
-                        contentDescription = "Contact profile picture",
+                        contentDescription = "Volume image",
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
@@ -324,7 +324,7 @@ fun NamePlusIcon(name:String) {
                 "Speed" -> {
                     Image(
                         painter = painterResource(id = R.drawable.speed_icon),
-                        contentDescription = "Contact profile picture",
+                        contentDescription = "Speed image",
                         modifier = Modifier
                             .size(70.dp)
                             .padding(horizontal = 4.dp)
@@ -367,28 +367,28 @@ fun getKeys(name: String): List<String> {
         "Foot",
         "Inch",
         "Nautical Mile",
-        "Kilometer",
-        "Meter",
-        "Centimeter",
-        "Millimeter",
-        "Micrometer",
-        "Nanometer"
+        "Kilometer(km)",
+        "Meter(m)",
+        "Centimeter(cm)",
+        "Millimeter(mm)",
+        "Micrometer(μm)",
+        "Nanometer(nm)"
     )
     val volumeKeys = listOf(
-        "barrel",
-        "gallon",
-        "quart",
-        "pint",
+        "barrel(bbl)",
+        "gallon(gal)",
+        "quart(qt)",
+        "pint(pt)",
         "cup",
-        "gill",
-        "tablespoon",
-        "teaspoon",
+        "gill(gi)",
+        "tablespoon(tbsp)",
+        "teaspoon(tsp)",
         "cubic meter",
         "cubic foot",
         "cubic yard",
-        "liter",
-        "milliliter",
-        "fluid ounce"
+        "liter(L)",
+        "milliliter(mL)",
+        "fluid ounce(fl oz)"
     )
     val speedKeys = listOf(
         "Kilometer per hour",
@@ -539,12 +539,12 @@ private fun toMeter(fromThis: String, convertMe: Double): Double {
         "Foot" -> conversion *= 0.3048
         "Inch" -> conversion *= 0.0254
         "Nautical Mile" -> conversion *= 1852
-        "Kilometer" -> conversion *= 1000
-        "Meter" -> conversion *= 1
-        "Centimeter" -> conversion *= 0.01
-        "Millimeter" -> conversion *= 0.001
-        "Micrometer" -> conversion *= 0.000001
-        "Nanometer" -> conversion *= 0.000000001
+        "Kilometer(km)" -> conversion *= 1000
+        "Meter(m)" -> conversion *= 1
+        "Centimeter(cm)" -> conversion *= 0.01
+        "Millimeter(mm)" -> conversion *= 0.001
+        "Micrometer(μm)" -> conversion *= 0.000001
+        "Nanometer(nm)" -> conversion *= 0.000000001
     }
     return conversion
 }
@@ -556,12 +556,12 @@ private fun fromMeter(toThat: String, convertMe: Double): Double {
         "Foot" -> conversion /= 0.3048
         "Inch" -> conversion /= 0.0254
         "Nautical Mile" -> conversion /= 1852
-        "Kilometer" -> conversion /= 1000
-        "Meter" -> conversion /= 1
-        "Centimeter" -> conversion /= 0.01
-        "Millimeter" -> conversion /= 0.001
-        "Micrometer" -> conversion /= 0.000001
-        "Nanometer" -> conversion /= 0.000000001
+        "Kilometer(km)" -> conversion /= 1000
+        "Meter(m)" -> conversion /= 1
+        "Centimeter(cm)" -> conversion /= 0.01
+        "Millimeter(mm)" -> conversion /= 0.001
+        "Micrometer(μm)" -> conversion /= 0.000001
+        "Nanometer(nm)" -> conversion /= 0.000000001
     }
     return conversion
 }
@@ -577,40 +577,40 @@ fun findLengthConversion(fromThis: String, toThat: String, convertMe: String): D
 private fun toLiter(fromThis: String, convertMe: Double): Double {
     var conversion = convertMe
     when (fromThis) {
-        "barrel" -> conversion *= 119.2404712
-        "gallon" -> conversion *= 3.785411784
-        "quart" -> conversion *= 0.946352946
-        "pint" -> conversion *= 0.473176473
+        "barrel(bbl)" -> conversion *= 119.2404712
+        "gallon(gal)" -> conversion *= 3.785411784
+        "quart(qt)" -> conversion *= 0.946352946
+        "pint(pt)" -> conversion *= 0.473176473
         "cup" -> conversion *= 0.2365882365
-        "gill" -> conversion *= 0.1182941182
-        "tablespoon" -> conversion *= 0.0147867648
-        "teaspoon" -> conversion *= 0.0049289216
+        "gill(gi)" -> conversion *= 0.1182941182
+        "tablespoon(tbsp)" -> conversion *= 0.0147867648
+        "teaspoon(tsp)" -> conversion *= 0.0049289216
         "cubic meter" -> conversion *= 1000
         "cubic foot" -> conversion *= 28.316846592
         "cubic yard" -> conversion *= 764.55485798
-        "liter" -> conversion *= 1
-        "milliliter" -> conversion *= 0.001
-        "fluid ounce" -> conversion *= 0.0295735296
+        "liter(L)" -> conversion *= 1
+        "milliliter(mL)" -> conversion *= 0.001
+        "fluid ounce(fl oz)" -> conversion *= 0.0295735296
     }
     return conversion
 }
 private fun fromLiter(toThat: String, convertMe: Double): Double {
     var conversion = convertMe
     when (toThat) {
-        "barrel" -> conversion /= 119.2404712
-        "gallon" -> conversion /= 3.785411784
-        "quart" -> conversion /= 0.946352946
-        "pint" -> conversion /= 0.473176473
+        "barrel(bbl)" -> conversion /= 119.2404712
+        "gallon(gal)" -> conversion /= 3.785411784
+        "quart(qt)" -> conversion /= 0.946352946
+        "pint(pt)" -> conversion /= 0.473176473
         "cup" -> conversion /= 0.2365882365
-        "gill" -> conversion /= 0.1182941182
-        "tablespoon" -> conversion /= 0.0147867648
-        "teaspoon" -> conversion /= 0.0049289216
+        "gill(gi)" -> conversion /= 0.1182941182
+        "tablespoon(tbsp)" -> conversion /= 0.0147867648
+        "teaspoon(tsp)" -> conversion /= 0.0049289216
         "cubic meter" -> conversion /= 1000
         "cubic foot" -> conversion /= 28.316846592
         "cubic yard" -> conversion /= 764.55485798
-        "liter" -> conversion /= 1
-        "milliliter" -> conversion /= 0.001
-        "fluid ounce" -> conversion /= 0.0295735296
+        "liter(L)" -> conversion /= 1
+        "milliliter(mL)" -> conversion /= 0.001
+        "fluid ounce(fl oz)" -> conversion /= 0.0295735296
     }
     return conversion
 }
