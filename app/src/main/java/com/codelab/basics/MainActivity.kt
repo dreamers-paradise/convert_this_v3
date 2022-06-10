@@ -498,9 +498,9 @@ private fun fromGrams(toThat: String, convertMe: Double): Double {
 fun findMassConversion(fromThis: String, toThat: String, convertMe: String): Double {
     val conversion = toGrams(fromThis, convertMe.toDouble())
     val converted = fromGrams(toThat, conversion)
-    if(converted > 1){
-        return Math.round(converted * 10000.0) / 10000.0
-    }
+//    if(converted > 1){
+//        return Math.round(converted * 10000.0) / 10000.0
+//    }
     return converted
 }
 
@@ -508,8 +508,8 @@ private fun toCelsius(fromThis: String, convertMe: Double): Double {
     var conversion = convertMe
     when (fromThis) {
         "Celsius(°C)" -> conversion *= 1
-        "kelvin(K)" -> conversion + 273.15
-        "Fahrenheit(°F)" -> ((conversion - 32) * (5/9))
+        "kelvin(K)" -> conversion += 273.15
+        "Fahrenheit(°F)" -> conversion = ((conversion - 32) * 5)/9.0
     }
     return conversion
 }
@@ -517,8 +517,8 @@ private fun fromCelsius(toThat: String, convertMe: Double): Double {
     var conversion = convertMe
     when (toThat) {
         "Celsius(°C)" -> conversion /= 1
-        "kelvin(K)" -> conversion - 273.15
-        "Fahrenheit(°F)" -> ((conversion * (9/5) + 32))
+        "kelvin(K)" -> conversion -= 273.15
+        "Fahrenheit(°F)" -> conversion = ((conversion * 9)/5.0) + 32
     }
     return conversion
 }
