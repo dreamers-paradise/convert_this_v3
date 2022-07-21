@@ -18,7 +18,6 @@ package com.codelab.basics
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateContentSize
@@ -34,8 +33,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,17 +41,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
 import com.codelab.basics.ui.BasicsCodelabTheme
+import java.lang.Math.round
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
@@ -459,9 +452,9 @@ private fun fromSeconds(toThat: String, convertMe: Double): Double {
     return conversion
 }
 fun findTimeConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    if (convertMe == "-") return 0.0
     val conversion = toSeconds(fromThis, convertMe.toDouble())
-    val converted = fromSeconds(toThat, conversion)
-    return converted
+    return fromSeconds(toThat, conversion)
 }
 
 private fun toGrams(fromThis: String, convertMe: Double): Double {
@@ -496,12 +489,12 @@ private fun fromGrams(toThat: String, convertMe: Double): Double {
     return conversion
 }
 fun findMassConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    if (convertMe == "-") return 0.0
     val conversion = toGrams(fromThis, convertMe.toDouble())
-    val converted = fromGrams(toThat, conversion)
 //    if(converted > 1){
 //        return Math.round(converted * 10000.0) / 10000.0
 //    }
-    return converted
+    return fromGrams(toThat, conversion)
 }
 
 private fun toCelsius(fromThis: String, convertMe: Double): Double {
@@ -523,10 +516,11 @@ private fun fromCelsius(toThat: String, convertMe: Double): Double {
     return conversion
 }
 fun findTemperatureConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    if (convertMe == "-") return 0.0
     val conversion = toCelsius(fromThis, convertMe.toDouble())
     val converted = fromCelsius(toThat, conversion)
     if(converted > 1){
-        return Math.round(converted * 10000.0) / 10000.0
+        return round(converted * 10000.0) / 10000.0
     }
     return converted
 }
@@ -566,10 +560,11 @@ private fun fromMeter(toThat: String, convertMe: Double): Double {
     return conversion
 }
 fun findLengthConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    if (convertMe == "-") return 0.0
     val conversion = toMeter(fromThis, convertMe.toDouble())
     val converted = fromMeter(toThat, conversion)
     if(converted > 1){
-        return Math.round(converted * 10000.0) / 10000.0
+        return round(converted * 10000.0) / 10000.0
     }
     return converted
 }
@@ -615,10 +610,11 @@ private fun fromLiter(toThat: String, convertMe: Double): Double {
     return conversion
 }
 fun findVolumeConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    if (convertMe == "-") return 0.0
     val conversion = toLiter(fromThis, convertMe.toDouble())
     val converted = fromLiter(toThat, conversion)
     if(converted > 1){
-        return Math.round(converted * 10000.0) / 10000.0
+        return round(converted * 10000.0) / 10000.0
     }
     return converted
 }
@@ -647,9 +643,9 @@ private fun fromKph(toThat: String, convertMe: Double): Double {
     return conversion
 }
 fun findSpeedConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    if (convertMe == "-") return 0.0
     val conversion = toKph(fromThis, convertMe.toDouble())
-    val converted = fromKph(toThat, conversion)
-    return converted
+    return fromKph(toThat, conversion)
 }
 
 private fun toByte(fromThis: String, convertMe: Double): Double {
@@ -681,8 +677,7 @@ private fun fromByte(toThat: String, convertMe: Double): Double {
 }
 fun findDataStorageConversion(fromThis: String, toThat: String, convertMe: String): Double {
     val conversion = toByte(fromThis, convertMe.toDouble())
-    val converted = fromByte(toThat, conversion)
-    return converted
+    return fromByte(toThat, conversion)
 }
 
 @Composable
@@ -706,7 +701,7 @@ fun ConversionArea(name:String, conversion:String) {
 
         for (unit in keysToUse){
             var converted = ""
-            if(userText.length > 0){
+            if(userText.isNotEmpty()){
                 val df = DecimalFormat("#.###")
                 df.roundingMode = RoundingMode.CEILING
                 when (name) {
