@@ -18,7 +18,6 @@ package com.codelab.basics
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateContentSize
@@ -34,8 +33,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,17 +41,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
 import com.codelab.basics.ui.BasicsCodelabTheme
+import java.lang.Math.round
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
@@ -131,15 +124,15 @@ private fun MyApp() {
 private fun OnboardingScreen(onContinueClicked:()->Unit) {
     Surface {
         Column(
-                modifier=Modifier.fillMaxSize(),
-                verticalArrangement=Arrangement.Center,
-                horizontalAlignment=Alignment.CenterHorizontally
-              ) {
+            modifier=Modifier.fillMaxSize(),
+            verticalArrangement=Arrangement.Center,
+            horizontalAlignment=Alignment.CenterHorizontally
+        ) {
             Text("Convert this is the best")
             Button(
-                    modifier=Modifier.padding(vertical=24.dp),
-                    onClick=onContinueClicked
-                  ) {
+                modifier=Modifier.padding(vertical=24.dp),
+                onClick=onContinueClicked
+            ) {
                 Text("Continue")
             }
         }
@@ -158,9 +151,9 @@ private fun Greetings(names:List<String> = listOf("Mass", "Time", "Temperature",
 @Composable
 private fun Greeting(name:String) {
     Card(
-            backgroundColor=MaterialTheme.colors.surface,
-            modifier=Modifier.padding(vertical=4.dp,horizontal=8.dp)
-        ) {
+        backgroundColor=MaterialTheme.colors.surface,
+        modifier=Modifier.padding(vertical=4.dp,horizontal=8.dp)
+    ) {
         CardContent(name)
     }
 }
@@ -168,84 +161,84 @@ private fun Greeting(name:String) {
 @Composable
 private fun CardContent(name:String) {
     var expanded by remember {mutableStateOf(false)}
-        Row(
-            modifier= Modifier
-                .animateContentSize(
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessLow
-                    )
+    Row(
+        modifier= Modifier
+            .animateContentSize(
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
                 )
-       ) {
+            )
+    ) {
         Column(
-                modifier=Modifier
-                    .weight(1f)
-              )
-            {
+            modifier=Modifier
+                .weight(1f)
+        )
+        {
             Row(
-                    modifier= Modifier
-                        .padding(12.dp)
-                        .animateContentSize(
-                            animationSpec = spring(
-                                dampingRatio = Spring.DampingRatioLowBouncy,
-                                stiffness = Spring.StiffnessHigh
-                            )
+                modifier= Modifier
+                    .padding(12.dp)
+                    .animateContentSize(
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioLowBouncy,
+                            stiffness = Spring.StiffnessHigh
                         )
-               ) {
-                    if(expanded) {
-                        Column(verticalArrangement=Arrangement.Center,
-                                horizontalAlignment=Alignment.CenterHorizontally) {
-                            Row(modifier=Modifier
-                                .clickable {expanded=!expanded})
-                             {
-                                NamePlusIcon(name = name)
-                            }
-                            var expandedDropDown by remember { mutableStateOf(false)}
-                            val suggestions  = getKeys(name)
-                            var selectedText by remember { mutableStateOf(suggestions[0]) }
+                    )
+            ) {
+                if(expanded) {
+                    Column(verticalArrangement=Arrangement.Center,
+                        horizontalAlignment=Alignment.CenterHorizontally) {
+                        Row(modifier=Modifier
+                            .clickable {expanded=!expanded})
+                        {
+                            NamePlusIcon(name = name)
+                        }
+                        var expandedDropDown by remember { mutableStateOf(false)}
+                        val suggestions  = getKeys(name)
+                        var selectedText by remember { mutableStateOf(suggestions[0]) }
 
-                            Column(Modifier.padding(5.dp)) {
+                        Column(Modifier.padding(5.dp)) {
 
-                                Box {
-                                    Row(Modifier.clickable {
-                                        expandedDropDown = !expandedDropDown
-                                    }) {
-                                        Text(text = selectedText)
-                                        Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = "")
+                            Box {
+                                Row(Modifier.clickable {
+                                    expandedDropDown = !expandedDropDown
+                                }) {
+                                    Text(text = selectedText)
+                                    Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = "")
 
-                                        DropdownMenu(
-                                            expanded = expandedDropDown,
-                                            onDismissRequest = { expandedDropDown = false }
-                                        ) {
-                                            suggestions.forEach { label ->
-                                                DropdownMenuItem(onClick = {
-                                                    selectedText = label
-                                                    expandedDropDown = false
-                                                }) {
-                                                    Text(text = label)
-                                                }
+                                    DropdownMenu(
+                                        expanded = expandedDropDown,
+                                        onDismissRequest = { expandedDropDown = false }
+                                    ) {
+                                        suggestions.forEach { label ->
+                                            DropdownMenuItem(onClick = {
+                                                selectedText = label
+                                                expandedDropDown = false
+                                            }) {
+                                                Text(text = label)
                                             }
                                         }
                                     }
                                 }
                             }
-                            ConversionArea(name = name, conversion = selectedText)
                         }
-                    } else {
-                        Column(verticalArrangement=Arrangement.Center,
-                                horizontalAlignment=Alignment.CenterHorizontally
-                            ) {
-                            Row(modifier=Modifier
-                                .clickable {expanded=!expanded})
-                            {
-                                NamePlusIcon(name = name)
-                            }
+                        ConversionArea(name = name, conversion = selectedText)
+                    }
+                } else {
+                    Column(verticalArrangement=Arrangement.Center,
+                        horizontalAlignment=Alignment.CenterHorizontally
+                    ) {
+                        Row(modifier=Modifier
+                            .clickable {expanded=!expanded})
+                        {
+                            NamePlusIcon(name = name)
                         }
                     }
                 }
             }
         }
     }
+}
 
 @Composable
 fun NamePlusIcon(name:String) {
@@ -253,87 +246,90 @@ fun NamePlusIcon(name:String) {
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(
-                modifier=Modifier.padding(horizontal=24.dp),
-                text = name,
-                style = MaterialTheme.typography.h4.copy(
-                    fontWeight = FontWeight.ExtraBold
-                )
+        Text(
+            modifier=Modifier.padding(horizontal=24.dp),
+            text = name,
+            style = MaterialTheme.typography.h4.copy(
+                fontWeight = FontWeight.ExtraBold
             )
-            when (name) {
-                "Data Storage" -> {
-                    Image(
-                        painter = painterResource(id = R.drawable.data_storage_icon),
-                        contentDescription = "Data Storage image",
-                        modifier = Modifier
-                            .size(70.dp)
-                            .padding(horizontal = 4.dp)
-                            .offset(x = (-24).dp)
-                    )
-                }
-                "Mass" -> {
-                    Image(
-                        painter = painterResource(id = R.drawable.mass_icon),
-                        contentDescription = "Mass image",
-                        modifier = Modifier
-                            .size(70.dp)
-                            .padding(horizontal = 4.dp)
-                            .offset(x = (-24).dp)
-                    )
-                }
-                "Time" -> {
-                    Image(
-                        painter = painterResource(id = R.drawable.time_icon),
-                        contentDescription = "Time image",
-                        modifier = Modifier
-                            .size(70.dp)
-                            .padding(horizontal = 4.dp)
-                            .offset(x = (-24).dp)
-                    )
-                }
-                "Temperature" -> {
-                    Image(
-                        painter = painterResource(id = R.drawable.temperature_icon),
-                        contentDescription = "Temperature image",
-                        modifier = Modifier
-                            .size(70.dp)
-                            .padding(horizontal = 4.dp)
-                            .offset(x = (-24).dp)
-                    )
-                }
-                "Length" -> {
-                    Image(
-                        painter = painterResource(id = R.drawable.length_icon),
-                        contentDescription = "Length image",
-                        modifier = Modifier
-                            .size(70.dp)
-                            .padding(horizontal = 4.dp)
-                            .offset(x = (-24).dp)
-                    )
-                }
-                "Volume" -> {
-                    Image(
-                        painter = painterResource(id = R.drawable.volume_icon),
-                        contentDescription = "Volume image",
-                        modifier = Modifier
-                            .size(70.dp)
-                            .padding(horizontal = 4.dp)
-                            .offset(x = (-24).dp)
-                    )
-                }
-                "Speed" -> {
-                    Image(
-                        painter = painterResource(id = R.drawable.speed_icon),
-                        contentDescription = "Speed image",
-                        modifier = Modifier
-                            .size(70.dp)
-                            .padding(horizontal = 4.dp)
-                            .offset(x = (-24).dp)
-                    )
-                }
+        )
+        when (name) {
+            "Data Storage" -> {
+                Image(
+                    painter = painterResource(id = R.drawable.data_storage_icon),
+                    contentDescription = "Data Storage image",
+                    modifier = Modifier
+                        .size(70.dp)
+                        .padding(horizontal = 4.dp)
+                        .offset(x = (-24).dp)
+                )
+            }
+            "Mass" -> {
+                Image(
+                    painter = painterResource(id = R.drawable.mass_icon),
+                    contentDescription = "Mass image",
+                    modifier = Modifier
+                        .size(70.dp)
+                        .padding(horizontal = 4.dp)
+                        .offset(x = (-24).dp)
+                )
+            }
+            "Time" -> {
+                Image(
+                    painter = painterResource(id = R.drawable.time_icon),
+                    contentDescription = "Time image",
+                    modifier = Modifier
+                        .size(70.dp)
+                        .padding(horizontal = 4.dp)
+                        .offset(x = (-24).dp)
+                )
+            }
+            "Temperature" -> {
+                Image(
+                    painter = painterResource(id = R.drawable.temperature_icon),
+                    contentDescription = "Temperature image",
+                    modifier = Modifier
+                        .size(70.dp)
+                        .padding(horizontal = 4.dp)
+                        .offset(x = (-24).dp)
+                )
+            }
+            "Length" -> {
+                Image(
+                    painter = painterResource(id = R.drawable.length_icon),
+                    contentDescription = "Length image",
+                    modifier = Modifier
+                        .size(70.dp)
+                        .padding(horizontal = 4.dp)
+                        .offset(x = (-24).dp)
+                )
+            }
+            "Volume" -> {
+                Image(
+                    painter = painterResource(id = R.drawable.volume_icon),
+                    contentDescription = "Volume image",
+                    modifier = Modifier
+                        .size(70.dp)
+                        .padding(horizontal = 4.dp)
+                        .offset(x = (-24).dp)
+                )
+            }
+            "Speed" -> {
+                Image(
+                    painter = painterResource(id = R.drawable.speed_icon),
+                    contentDescription = "Speed image",
+                    modifier = Modifier
+                        .size(70.dp)
+                        .padding(horizontal = 4.dp)
+                        .offset(x = (-24).dp)
+                )
             }
         }
     }
+}
+fun isNumber(s: String): Boolean {
+    return s.matches("-?\\d+(\\.\\d+)?".toRegex())
+}
 
 fun getKeys(name: String): List<String> {
     val massKeys = listOf(
@@ -459,9 +455,10 @@ private fun fromSeconds(toThat: String, convertMe: Double): Double {
     return conversion
 }
 fun findTimeConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    if (convertMe == "-") return 0.0
+    if (!isNumber(convertMe)) return 0.0
     val conversion = toSeconds(fromThis, convertMe.toDouble())
-    val converted = fromSeconds(toThat, conversion)
-    return converted
+    return fromSeconds(toThat, conversion)
 }
 
 private fun toGrams(fromThis: String, convertMe: Double): Double {
@@ -496,12 +493,13 @@ private fun fromGrams(toThat: String, convertMe: Double): Double {
     return conversion
 }
 fun findMassConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    if (convertMe == "-") return 0.0
+    if (!isNumber(convertMe)) return 0.0
     val conversion = toGrams(fromThis, convertMe.toDouble())
-    val converted = fromGrams(toThat, conversion)
 //    if(converted > 1){
 //        return Math.round(converted * 10000.0) / 10000.0
 //    }
-    return converted
+    return fromGrams(toThat, conversion)
 }
 
 private fun toCelsius(fromThis: String, convertMe: Double): Double {
@@ -523,10 +521,12 @@ private fun fromCelsius(toThat: String, convertMe: Double): Double {
     return conversion
 }
 fun findTemperatureConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    if (convertMe == "-") return 0.0
+    if (!isNumber(convertMe)) return 0.0
     val conversion = toCelsius(fromThis, convertMe.toDouble())
     val converted = fromCelsius(toThat, conversion)
     if(converted > 1){
-        return Math.round(converted * 10000.0) / 10000.0
+        return round(converted * 10000.0) / 10000.0
     }
     return converted
 }
@@ -566,10 +566,12 @@ private fun fromMeter(toThat: String, convertMe: Double): Double {
     return conversion
 }
 fun findLengthConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    if (convertMe == "-") return 0.0
+    if (!isNumber(convertMe)) return 0.0
     val conversion = toMeter(fromThis, convertMe.toDouble())
     val converted = fromMeter(toThat, conversion)
     if(converted > 1){
-        return Math.round(converted * 10000.0) / 10000.0
+        return round(converted * 10000.0) / 10000.0
     }
     return converted
 }
@@ -615,10 +617,12 @@ private fun fromLiter(toThat: String, convertMe: Double): Double {
     return conversion
 }
 fun findVolumeConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    if (convertMe == "-") return 0.0
+    if (!isNumber(convertMe)) return 0.0
     val conversion = toLiter(fromThis, convertMe.toDouble())
     val converted = fromLiter(toThat, conversion)
     if(converted > 1){
-        return Math.round(converted * 10000.0) / 10000.0
+        return round(converted * 10000.0) / 10000.0
     }
     return converted
 }
@@ -647,9 +651,10 @@ private fun fromKph(toThat: String, convertMe: Double): Double {
     return conversion
 }
 fun findSpeedConversion(fromThis: String, toThat: String, convertMe: String): Double {
+    if (convertMe == "-") return 0.0
+    if (!isNumber(convertMe)) return 0.0
     val conversion = toKph(fromThis, convertMe.toDouble())
-    val converted = fromKph(toThat, conversion)
-    return converted
+    return fromKph(toThat, conversion)
 }
 
 private fun toByte(fromThis: String, convertMe: Double): Double {
@@ -681,18 +686,17 @@ private fun fromByte(toThat: String, convertMe: Double): Double {
 }
 fun findDataStorageConversion(fromThis: String, toThat: String, convertMe: String): Double {
     val conversion = toByte(fromThis, convertMe.toDouble())
-    val converted = fromByte(toThat, conversion)
-    return converted
+    return fromByte(toThat, conversion)
 }
 
 @Composable
 fun ConversionArea(name:String, conversion:String) {
     Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.surface),
-            horizontalAlignment = Alignment.CenterHorizontally
-          ) {
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.surface),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
         var userText by remember { mutableStateOf("") }
         OutlinedTextField(
@@ -706,7 +710,7 @@ fun ConversionArea(name:String, conversion:String) {
 
         for (unit in keysToUse){
             var converted = ""
-            if(userText.length > 0){
+            if(userText.isNotEmpty()){
                 val df = DecimalFormat("#.###")
                 df.roundingMode = RoundingMode.CEILING
                 when (name) {
@@ -736,11 +740,11 @@ fun ConversionArea(name:String, conversion:String) {
 }
 
 @Preview(
-        showBackground=true,
-        widthDp=320,
-        uiMode=UI_MODE_NIGHT_YES,
-        name="DefaultPreviewDark"
-        )
+    showBackground=true,
+    widthDp=320,
+    uiMode=UI_MODE_NIGHT_YES,
+    name="DefaultPreviewDark"
+)
 @Preview(showBackground=true,widthDp=320)
 @Composable
 fun DefaultPreview() {
