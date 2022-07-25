@@ -337,7 +337,7 @@ fun getKeys(name: String): List<String> {
         "Ounce(oz)",
         "Pound(lb)",
         "Kilogram(kg)",
-        "Microgram(mcg)",
+        "Miligram(mg)",
         "Stone(st)",
         "US ton(t)",
         "Imperial ton(t)",
@@ -438,9 +438,9 @@ private fun toSeconds(fromThis: String, convertMe: Double): Double {
 private fun fromSeconds(toThat: String, convertMe: Double): Double {
     var conversion = convertMe
     when (toThat) {
-//        "Nanosecond" -> conversion /= 1000000000
-//        "Microsecond" -> conversion /= 1000000
-//        "Millisecond" -> conversion /= 1000
+        "Nanosecond" -> conversion /= 1000000000
+        "Microsecond" -> conversion /= 1000000
+        "Millisecond" -> conversion /= 1000
         "Second" -> conversion /= 1
         "Minute" -> conversion /= 60
         "Hour" -> conversion /= 3600
@@ -448,9 +448,9 @@ private fun fromSeconds(toThat: String, convertMe: Double): Double {
         "Week" -> conversion /= 604800
         "Month" -> conversion /= 2629746
         "Year" -> conversion /= 31556952
-//        "Decade" -> conversion /= 315569520
-//        "Century" -> conversion /= 3155695200
-//        "Millennium" -> conversion /= 31557600000
+        "Decade" -> conversion /= 315569520
+        "Century" -> conversion /= 3155695200
+        "Millennium" -> conversion /= 31557600000
     }
     return conversion
 }
@@ -465,11 +465,11 @@ private fun toGrams(fromThis: String, convertMe: Double): Double {
     var conversion = convertMe
 
     when (fromThis) {
+        "Gram(g)" -> conversion *= 1
         "Ounce(oz)" -> conversion *= 28.34952
         "Pound(lb)" -> conversion *= 453.59237
-        "Gram(g)" -> conversion *= 1
         "Kilogram(kg)" -> conversion *= 1000
-        "Microgram(&mu;g)" -> conversion *= 1000000
+        "Miligram(mg)" -> conversion /= 1000
         "Stone(st)" -> conversion *= 6350.29318
         "US ton(t)" -> conversion *=  907184.74
         "Imperial ton(t)" -> conversion *=  1016046.91
@@ -480,11 +480,11 @@ private fun toGrams(fromThis: String, convertMe: Double): Double {
 private fun fromGrams(toThat: String, convertMe: Double): Double {
     var conversion = convertMe
     when (toThat) {
+        "Gram(g)" -> conversion /= 1
         "Ounce(oz)" -> conversion /= 28.34952
         "Pound(lb)" -> conversion /= 453.59237
-        "Gram(g)" -> conversion /= 1
         "Kilogram(kg)" -> conversion /= 1000
-        "Microgram(&mu;g)" -> conversion /= 1000000
+        "Miligram(mg)" -> conversion *= 1000
         "Stone(st)" -> conversion /= 6350.29318
         "US ton(t)" -> conversion /=  907184.74
         "Imperial ton(t)" -> conversion /=  1016046.91
@@ -496,9 +496,6 @@ fun findMassConversion(fromThis: String, toThat: String, convertMe: String): Dou
     if (convertMe == "-") return 0.0
     if (!isNumber(convertMe)) return 0.0
     val conversion = toGrams(fromThis, convertMe.toDouble())
-//    if(converted > 1){
-//        return Math.round(converted * 10000.0) / 10000.0
-//    }
     return fromGrams(toThat, conversion)
 }
 
