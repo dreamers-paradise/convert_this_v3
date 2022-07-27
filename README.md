@@ -1,6 +1,8 @@
 ConvertThis is built on the source code for the solution of the
 [Jetpack Compose Basics codelab](https://developer.android.com/codelabs/jetpack-compose-basics).
 
+"Icons by Icons8" https://icons8.com
+
 ## License
 
 ```

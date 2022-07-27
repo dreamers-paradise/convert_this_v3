@@ -18,3 +18,5 @@ Data Storage: bit(b), byte(B), kilobyte(kB), megabyte(MB), gigabyte(GB), terabyt
 
 Got a request for a new unit? Send it on over.
 Noticed a bug that needs fixed? Send it on over.
+
+"Icons by Icons8" https://icons8.com
