@@ -1,0 +1,20 @@
+ConvertThis is the first app from Dreamers Paradise Entertainment.
+
+ConvertThis allows you to quickly convert between units in the following measurements:
+
+Mass: Gram(g), Ounce(oz), Pound(lb), Kilogram(kg), Miligram(mg), Stone(st), US ton(t), Imperial ton(t), and Metric ton(mt).
+
+Time: Second, Minute, Hour, Day, Week, Month, and Year.
+
+Temperature: Celsius(°C), Fahrenheit(°F), and kelvin(K).
+
+Length: Mile, Yard, Foot, Inch, Nautical Mile, Kilometer(km), Meter(m), Centimeter(cm), Millimeter(mm), Micrometer(μm), and Nanometer(nm).
+
+Volume: barrel(bbl), gallon(gal), quart(qt), pint(pt), cup, gill(gi), tablespoon(tbsp), teaspoon(tsp), cubic meter, cubic foot, cubic yard, liter(L), milliliter(mL), and fluid ounce(fl oz).
+
+Speed: Kilometer per hour, Miles per hour(mph), Foot per second, Meter per second, and Knot.
+
+Data Storage: bit(b), byte(B), kilobyte(kB), megabyte(MB), gigabyte(GB), terabyte(TB), and petabyte(PB).
+
+Got a request for a new unit? Send it on over.
+Noticed a bug that needs fixed? Send it on over.
